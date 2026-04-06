@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Website</title>
+  <meta charset="UTF-8">
+  <title>Finance AI MVP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Hello World!</h1>
-    <p>This site is powered by GitHub Pages.</p>
+<body class="bg-gray-100 font-sans">
+
+  <!-- LOGIN / REGISTER -->
+  <div id="authSection" class="flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-2xl shadow-md w-96">
+      <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+      
+      <input id="email" type="email" placeholder="Email"
+        class="w-full p-2 mb-3 border rounded">
+      
+      <input id="password" type="password" placeholder="Password"
+        class="w-full p-2 mb-4 border rounded">
+
+      <button class="w-full bg-blue-500 text-white p-2 rounded mb-2">
+        Login
+      </button>
+
+      <button class="w-full bg-gray-300 p-2 rounded">
+        Register
+      </button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden p-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Dashboard</h1>
+      <button class="bg-red-500 text-white px-4 py-2 rounded">
+        Logout
+      </button>
+    </div>
+
+    <!-- Balance -->
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+      <h2 class="text-lg font-semibold">Balance</h2>
+      <p class="text-2xl font-bold">$0</p>
+    </div>
+
+    <!-- Add Transaction -->
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+      <h2 class="text-lg font-semibold mb-2">Add Transaction</h2>
+      
+      <input type="text" placeholder="Description"
+        class="w-full p-2 mb-2 border rounded">
+      
+      <input type="number" placeholder="Amount"
+        class="w-full p-2 mb-2 border rounded">
+
+      <select class="w-full p-2 mb-2 border rounded">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+
+      <button class="w-full bg-green-500 text-white p-2 rounded">
+        Add
+      </button>
+    </div>
+
+    <!-- Goal -->
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+      <h2 class="text-lg font-semibold mb-2">Savings Goal</h2>
+      
+      <input type="number" placeholder="Target Amount"
+        class="w-full p-2 mb-2 border rounded">
+
+      <button class="w-full bg-blue-500 text-white p-2 rounded mb-2">
+        Set Goal
+      </button>
+
+      <p>Progress: $0 / $0</p>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="bg-white p-4 rounded-xl shadow">
+      <h2 class="text-lg font-semibold mb-2">Suggestions</h2>
+      <ul class="list-disc pl-5 text-gray-700">
+        <li>No data yet</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
