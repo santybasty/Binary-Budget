@@ -45,22 +45,23 @@
       <p class="text-2xl font-bold">$0</p>
     </div>
 
-    <!-- Add Transaction -->
+    <!-- ✅ FIXED Add Transaction -->
     <div class="bg-white p-4 rounded-xl shadow mb-6">
       <h2 class="text-lg font-semibold mb-2">Add Transaction</h2>
       
-      <input type="text" placeholder="Description"
+      <input id="desc" type="text" placeholder="Description"
         class="w-full p-2 mb-2 border rounded">
       
-      <input type="number" placeholder="Amount"
+      <input id="amount" type="number" placeholder="Amount"
         class="w-full p-2 mb-2 border rounded">
 
-      <select class="w-full p-2 mb-2 border rounded">
+      <select id="type" class="w-full p-2 mb-2 border rounded">
         <option value="income">Income</option>
         <option value="expense">Expense</option>
       </select>
 
-      <button class="w-full bg-green-500 text-white p-2 rounded">
+      <button id="addTransactionBtn"
+        class="w-full bg-green-500 text-white p-2 rounded">
         Add
       </button>
     </div>
@@ -89,7 +90,7 @@
 
   </div>
 
-  <!-- ✅ IMPORTANT: type="module" -->
+  <!-- ✅ IMPORTANT -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
