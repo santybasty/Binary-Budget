@@ -1,6 +1,6 @@
 // 🔥 Import Firebase modules from CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // 🔥 Your Firebase config
 const firebaseConfig = {
@@ -22,15 +22,57 @@ const db = getFirestore(app);
 console.log("Firestore Database connected successfully!");
 
 // ===============================
-// UI LOGIC (your existing code)
+// UI LOGIC
 // ===============================
 
 const authSection = document.getElementById("authSection");
 const dashboard = document.getElementById("dashboard");
 const loginBtn = document.getElementById("loginBtn");
 
-// Fake login toggle (for UI testing only)
+// Fake login toggle
 loginBtn.addEventListener("click", () => {
   authSection.classList.add("hidden");
   dashboard.classList.remove("hidden");
+});
+
+// ===============================
+// 🔥 FIRESTORE: ADD TRANSACTION
+// ===============================
+
+// Get form elements
+const descInput = document.getElementById("desc");
+const amountInput = document.getElementById("amount");
+const typeInput = document.getElementById("type");
+const addTransactionBtn = document.getElementById("addTransactionBtn");
+
+// Add transaction to Firestore
+addTransactionBtn.addEventListener("click", async () => {
+  const description = descInput.value;
+  const amount = parseFloat(amountInput.value);
+  const type = typeInput.value;
+
+  // Validation
+  if (!description || isNaN(amount)) {
+    alert("Please enter valid data");
+    return;
+  }
+
+  try {
+    const docRef = await addDoc(collection(db, "transactions"), {
+      description: description,
+      amount: amount,
+      type: type,
+      createdAt: new Date()
+    });
+
+    console.log("Transaction saved with ID:", docRef.id);
+
+    // Clear inputs
+    descInput.value = "";
+    amountInput.value = "";
+    typeInput.value = "income";
+
+  } catch (error) {
+    console.error("Error adding transaction:", error);
+  }
 });
