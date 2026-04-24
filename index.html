@@ -5,92 +5,112 @@
   <title>Binary Budget</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans">
 
-  <!-- LOGIN / REGISTER -->
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 font-sans">
+
+  <!-- LOGIN -->
   <div id="authSection" class="flex items-center justify-center h-screen">
-    <div class="bg-white p-8 rounded-2xl shadow-md w-96">
-      <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-96">
+      <h2 class="text-3xl font-bold mb-2 text-center text-blue-600">Binary Budget</h2>
+      <p class="text-center text-gray-500 mb-6">Track smarter. Spend better.</p>
       
       <input id="email" type="email" placeholder="Email"
-        class="w-full p-2 mb-3 border rounded">
+        class="w-full p-2 mb-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
       
       <input id="password" type="password" placeholder="Password"
-        class="w-full p-2 mb-4 border rounded">
+        class="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
 
-      <button id="loginBtn" class="w-full bg-blue-500 text-white p-2 rounded mb-2">
+      <button id="loginBtn"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded mb-2 transition">
         Login
       </button>
 
-      <button class="w-full bg-gray-300 p-2 rounded">
+      <button
+        class="w-full bg-gray-200 hover:bg-gray-300 p-2 rounded transition">
         Register
       </button>
     </div>
   </div>
 
   <!-- DASHBOARD -->
-  <div id="dashboard" class="hidden p-6">
+  <div id="dashboard" class="hidden p-6 max-w-4xl mx-auto">
 
     <!-- Header -->
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">Dashboard</h1>
-      <button class="bg-red-500 text-white px-4 py-2 rounded">
+      <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+      <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition">
         Logout
       </button>
     </div>
 
     <!-- Balance -->
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-      <h2 class="text-lg font-semibold">Balance</h2>
-      <p class="text-2xl font-bold">$0</p>
+    <div class="bg-white p-6 rounded-2xl shadow mb-6 text-center">
+      <h2 class="text-lg text-gray-500">Current Balance</h2>
+      <p class="text-4xl font-bold text-green-600 mt-2">$0.00</p>
     </div>
 
-    <!-- ✅ FIXED Add Transaction -->
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-      <h2 class="text-lg font-semibold mb-2">Add Transaction</h2>
+    <!-- Add Transaction -->
+    <div class="bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="text-xl font-semibold mb-4">Add Transaction</h2>
       
-      <input id="desc" type="text" placeholder="Description"
-        class="w-full p-2 mb-2 border rounded">
+      <input id="desc" type="text" placeholder="e.g. Groceries"
+        class="w-full p-2 mb-3 border rounded focus:ring-2 focus:ring-green-400">
       
-      <input id="amount" type="number" placeholder="Amount"
-        class="w-full p-2 mb-2 border rounded">
+      <input id="amount" type="number" placeholder="Amount ($)"
+        class="w-full p-2 mb-3 border rounded focus:ring-2 focus:ring-green-400">
 
-      <select id="type" class="w-full p-2 mb-2 border rounded">
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
+      <select id="type"
+        class="w-full p-2 mb-3 border rounded focus:ring-2 focus:ring-green-400">
+        <option value="income">💰 Income</option>
+        <option value="expense">💸 Expense</option>
       </select>
 
       <button id="addTransactionBtn"
-        class="w-full bg-green-500 text-white p-2 rounded">
-        Add
+        class="w-full bg-green-500 hover:bg-green-600 text-white p-2 rounded transition">
+        Add Transaction
       </button>
     </div>
 
-    <!-- Goal -->
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-      <h2 class="text-lg font-semibold mb-2">Savings Goal</h2>
+    <!-- Savings Goal -->
+    <div class="bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="text-xl font-semibold mb-3">Savings Goal</h2>
       
-      <input type="number" placeholder="Target Amount"
-        class="w-full p-2 mb-2 border rounded">
+      <input type="number" placeholder="Target Amount ($)"
+        class="w-full p-2 mb-3 border rounded focus:ring-2 focus:ring-blue-400">
 
-      <button class="w-full bg-blue-500 text-white p-2 rounded mb-2">
+      <button
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded mb-3 transition">
         Set Goal
       </button>
 
-      <p>Progress: $0 / $0</p>
+      <div class="text-sm text-gray-600">
+        Progress: <span class="font-semibold">$0 / $0</span>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="w-full bg-gray-200 rounded-full h-3 mt-2">
+        <div class="bg-blue-500 h-3 rounded-full w-0"></div>
+      </div>
     </div>
 
     <!-- Suggestions -->
-    <div class="bg-white p-4 rounded-xl shadow">
-      <h2 class="text-lg font-semibold mb-2">Suggestions</h2>
-      <ul class="list-disc pl-5 text-gray-700">
-        <li>No data yet</li>
+    <div class="bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="text-xl font-semibold mb-3">Suggestions</h2>
+      <ul class="list-disc pl-5 text-gray-700 space-y-1">
+        <li>Add transactions to receive insights</li>
+      </ul>
+    </div>
+
+    <!-- Transactions List (NEW - prepares for next step) -->
+    <div class="bg-white p-6 rounded-2xl shadow">
+      <h2 class="text-xl font-semibold mb-3">Recent Transactions</h2>
+      <ul id="transactionList" class="space-y-2 text-gray-700">
+        <li class="text-gray-400">No transactions yet</li>
       </ul>
     </div>
 
   </div>
 
-  <!-- ✅ IMPORTANT -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
