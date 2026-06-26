@@ -23,12 +23,12 @@ import {
 
 // ─── FIREBASE CONFIG ──────────────────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey: "AIzaSyCUB-drp28jlkN-s9x3kgIW2ZBPxVb7Aao",
-  authDomain: "binarybudget-ff68e.firebaseapp.com",
-  projectId: "binarybudget-ff68e",
-  storageBucket: "binarybudget-ff68e.firebasestorage.app",
-  messagingSenderId: "912866542299",
-  appId: "1:912866542299:web:5b584e023b10dcc48682fe"
+  apiKey: "AIzaSyAEsDB0CaeUMbLkpZoFX_e9NRVMk__Q2-c",
+  authDomain: "binary-budget-final.firebaseapp.com",
+  projectId: "binary-budget-final",
+  storageBucket: "binary-budget-final.firebasestorage.app",
+  messagingSenderId: "557997253413",
+  appId: "1:557997253413:web:a6f98f2fad298c41c4f0cc"
 };
 
 const app = initializeApp(firebaseConfig);
