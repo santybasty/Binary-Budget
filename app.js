@@ -172,9 +172,9 @@ addTransactionBtn.addEventListener("click", async () => {
 
     descInput.value   = "";
     amountInput.value = "";
-  } catch (error) {
+ } catch (error) {
     console.error(error);
-    alert("Failed to save transaction. Check Firestore rules.");
+    alert(error.code + ": " + error.message);
   }
 });
 
