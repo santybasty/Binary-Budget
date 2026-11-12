@@ -1,283 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Binary Budget</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    .glass {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(10px);
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .pulse-card:hover {
-      transform: translateY(-4px);
-      transition: 0.3s ease;
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Binary Budget – money in, money out, nothing hidden</title>
+<link rel="icon" href="binary_budget_logo.jpeg"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#020F4A;--deep:#010829;--lime:#B8FF1F;--line:rgba(255,255,255,.14)}
+html{scroll-behavior:smooth}
+body{font-family:Sora,system-ui,sans-serif;background:var(--navy);color:#fff;min-height:100vh}
+.panel{background:var(--deep);border:1px solid var(--line);border-radius:1.25rem}
+.btn{background:var(--lime);color:var(--navy);font-weight:800;border-radius:9999px;padding:.8rem 1.5rem;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(184,255,31,.3)}
+.ghost{border:1px solid var(--line);border-radius:9999px;padding:.7rem 1.3rem;transition:border-color .2s}
+.ghost:hover{border-color:var(--lime)}
+.inp{width:100%;padding:.85rem 1rem;border-radius:.75rem;background:var(--deep);border:1px solid var(--line);color:#fff;margin-bottom:.75rem}
+.inp::placeholder{color:rgba(255,255,255,.4)}
+:is(.inp,.btn,.ghost,button):focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.lime{color:var(--lime)}
+/* the binary switch: money in (1) / money out (0) */
+.bin{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:9999px;padding:4px;margin-bottom:.75rem}
+.bin button{padding:.65rem;border-radius:9999px;font-weight:600;transition:.25s}
+.bin button.on{background:var(--lime);color:var(--navy)}
+.tab{padding:.6rem 1.1rem;border-radius:9999px;white-space:nowrap;border:1px solid transparent;transition:.2s}
+.tab:hover{border-color:var(--line)}
+.tab.on{background:var(--lime);color:var(--navy);font-weight:800}
+.tab.lock{opacity:.45}
+/* hero ledger: the one animated moment */
+.row{animation:drop .7s both}
+.row:nth-child(2){animation-delay:.25s}.row:nth-child(3){animation-delay:.5s}.row:nth-child(4){animation-delay:.75s}
+@keyframes drop{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
+<body>
 
-<body class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 min-h-screen text-white font-sans">
+<!-- ============ LANDING ============ -->
+<div id="landing">
+  <header class="max-w-6xl mx-auto px-5 py-5 flex items-center justify-between">
+    <img src="binary_budget_logo.jpeg" alt="Binary Budget" class="h-14 rounded-lg"/>
+    <nav class="flex items-center gap-2 text-sm">
+      <a href="#pricing" class="px-3 hidden sm:block">Pricing</a>
+      <button data-auth class="ghost">Log in</button>
+      <button data-auth class="btn text-sm">Start free setup</button>
+    </nav>
+  </header>
 
-  <!-- AUTH SECTION -->
-  <div id="authSection" class="flex items-center justify-center min-h-screen px-4">
-
-    <div class="glass p-8 rounded-3xl shadow-2xl w-full max-w-md fade-in border border-white/20">
-
-      <div class="text-center mb-6">
-        <h1 class="text-4xl font-extrabold text-blue-500 mb-2">
-          Binary Budget
-        </h1>
-
-        <p class="text-gray-700 font-medium">
-          Manage money like a pro 🚀
-        </p>
+  <section class="max-w-6xl mx-auto px-5 pt-10 pb-20 grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.02] tracking-tight">Money in.<br>Money out.<br><span class="lime">Nothing in between.</span></h1>
+      <p class="mt-6 text-lg font-light text-white/75 max-w-md">Every dollar is either coming in or going out. Binary Budget keeps that simple, shows you where it goes, and helps you save toward what matters.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <button data-auth class="btn">Create your account</button>
+        <a href="#pricing" class="ghost">See plans</a>
       </div>
-
-      <input
-        id="email"
-        type="email"
-        placeholder="Enter your email"
-        class="w-full p-3 mb-4 rounded-xl border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-
-      <input
-        id="password"
-        type="password"
-        placeholder="Enter your password"
-        class="w-full p-3 mb-4 rounded-xl border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-
-      <button
-        id="loginBtn"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-semibold transition duration-300 shadow-lg"
-      >
-        Login
-      </button>
-
-      <button
-        id="registerBtn"
-        class="w-full mt-3 bg-white/20 hover:bg-white/30 text-black p-3 rounded-xl font-semibold transition duration-300"
-      >
-        Register
-      </button>
-
-      <p class="text-center text-sm text-gray-700 mt-5">
-        Start tracking your financial future today 💡
-      </p>
     </div>
+    <div class="panel p-6 shadow-2xl" aria-label="Example ledger">
+      <p class="text-sm text-white/60 mb-4">This month</p>
+      <div class="space-y-3 font-semibold">
+        <div class="row flex justify-between"><span><span class="lime font-extrabold mr-3">1</span>Paycheck</span><span class="lime">+$1,850.00</span></div>
+        <div class="row flex justify-between"><span><span class="text-white/40 font-extrabold mr-3">0</span>Rent</span><span class="text-white/70">-$720.00</span></div>
+        <div class="row flex justify-between"><span><span class="text-white/40 font-extrabold mr-3">0</span>Groceries</span><span class="text-white/70">-$210.40</span></div>
+        <div class="row flex justify-between"><span><span class="lime font-extrabold mr-3">1</span>Sold bike</span><span class="lime">+$120.00</span></div>
+      </div>
+      <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-end">
+        <span class="text-white/60 text-sm">Left to save</span><span class="text-4xl font-extrabold lime">$1,039.60</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 pb-20 grid md:grid-cols-3 gap-8 text-white/80">
+    <div><h3 class="text-xl font-bold text-white mb-2">See where it goes</h3><p class="font-light">Spending is grouped by category, so the leaks show up before the month ends.</p></div>
+    <div><h3 class="text-xl font-bold text-white mb-2">Save toward a number</h3><p class="font-light">Set a goal and watch your balance close the gap.</p></div>
+    <div><h3 class="text-xl font-bold text-white mb-2">Learn as you go</h3><p class="font-light">Short money lessons for students, included with every school plan.</p></div>
+  </section>
+
+  <section id="pricing" class="max-w-5xl mx-auto px-5 pb-24">
+    <h2 class="text-4xl font-extrabold mb-2">Pick the plan that fits</h2>
+    <p class="text-white/70 font-light mb-10">Cancel any time. Billed monthly.</p>
+    <div id="pricingLanding" class="grid md:grid-cols-2 gap-6 items-stretch"></div>
+  </section>
+  <footer class="text-center text-sm text-white/50 pb-10">© Binary Budget</footer>
+</div>
+
+<!-- ============ AUTH MODAL ============ -->
+<div id="authModal" class="hidden fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+  <div class="panel p-8 w-full max-w-sm relative">
+    <button id="closeAuth" class="absolute top-4 right-5 text-2xl text-white/60" aria-label="Close">×</button>
+    <h2 class="text-2xl font-extrabold mb-1">Welcome to Binary Budget</h2>
+    <p class="text-sm text-white/60 mb-5">Log in, or create an account in one step.</p>
+    <input id="email" type="email" placeholder="Email address" class="inp" autocomplete="email"/>
+    <input id="password" type="password" placeholder="Password (6+ characters)" class="inp" autocomplete="current-password"/>
+    <button id="loginBtn" class="btn w-full">Log in</button>
+    <button id="registerBtn" class="ghost w-full mt-3">Create account</button>
   </div>
+</div>
 
-  <!-- DASHBOARD -->
-  <div id="dashboard" class="hidden max-w-7xl mx-auto p-6 fade-in">
-
-    <!-- HEADER -->
-    <div class="flex flex-col md:flex-row justify-between items-center mb-8">
-
-      <div>
-        <h1 class="text-4xl font-bold">
-          Welcome Back 👋
-        </h1>
-
-        <p class="text-gray-300 mt-1">
-          Here's your financial overview
-        </p>
-      </div>
-
-      <button
-        id="logoutBtn"
-        class="mt-4 md:mt-0 bg-red-500 hover:bg-red-600 px-5 py-3 rounded-xl font-semibold shadow-lg transition"
-      >
-        Logout
-      </button>
+<!-- ============ APP ============ -->
+<div id="app" class="hidden max-w-6xl mx-auto px-5 py-5">
+  <header class="flex items-center justify-between mb-6">
+    <img src="binary_budget_logo.jpeg" alt="Binary Budget" class="h-12 rounded-lg"/>
+    <div class="flex items-center gap-3">
+      <span id="badge" class="text-sm px-3 py-1 rounded-full border border-white/20">No plan yet</span>
+      <button id="logoutBtn" class="ghost text-sm">Log out</button>
     </div>
+  </header>
+  <nav id="nav" class="flex gap-2 overflow-x-auto mb-8 text-sm"></nav>
 
-    <!-- STATS -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-
-      <!-- BALANCE -->
-      <div class="glass rounded-3xl p-6 shadow-xl pulse-card">
-        <p class="text-gray-600 text-sm uppercase tracking-widest">
-          Current Balance
-        </p>
-
-        <h2
-          id="balance"
-          class="text-4xl font-extrabold mt-3 text-green-500"
-        >
-          $0.00
-        </h2>
+  <!-- Dashboard -->
+  <section id="v-dashboard">
+    <div class="grid sm:grid-cols-3 gap-4 mb-6">
+      <div class="panel p-6"><p class="text-sm text-white/60">Balance</p><p id="balance" class="text-4xl font-extrabold lime mt-2">$0.00</p></div>
+      <div class="panel p-6"><p class="text-sm text-white/60">Money in</p><p id="incomeDisplay" class="text-3xl font-extrabold mt-2">$0.00</p></div>
+      <div class="panel p-6"><p class="text-sm text-white/60">Money out</p><p id="expenseDisplay" class="text-3xl font-extrabold mt-2 text-white/70">$0.00</p></div>
+    </div>
+    <div class="grid lg:grid-cols-5 gap-6">
+      <div class="panel p-6 lg:col-span-2">
+        <h2 class="text-xl font-bold mb-4">Add a transaction</h2>
+        <div class="bin" role="group" aria-label="Type"><button id="tIn" class="on">1 · Money in</button><button id="tOut">0 · Money out</button></div>
+        <input id="desc" class="inp" placeholder="What was it? e.g. Netflix"/>
+        <input id="amount" type="number" min="0" step="0.01" class="inp" placeholder="Amount in dollars"/>
+        <select id="cat" class="inp"></select>
+        <button id="addTransactionBtn" class="btn w-full">Add transaction</button>
       </div>
-
-      <!-- INCOME -->
-      <div class="glass rounded-3xl p-6 shadow-xl pulse-card">
-        <p class="text-gray-600 text-sm uppercase tracking-widest">
-          Total Income
-        </p>
-
-        <h2
-          id="incomeDisplay"
-          class="text-4xl font-extrabold mt-3 text-blue-500"
-        >
-          $0.00
-        </h2>
-      </div>
-
-      <!-- EXPENSES -->
-      <div class="glass rounded-3xl p-6 shadow-xl pulse-card">
-        <p class="text-gray-600 text-sm uppercase tracking-widest">
-          Total Expenses
-        </p>
-
-        <h2
-          id="expenseDisplay"
-          class="text-4xl font-extrabold mt-3 text-red-500"
-        >
-          $0.00
-        </h2>
+      <div class="lg:col-span-3 space-y-6">
+        <div class="panel p-6"><h2 class="text-xl font-bold mb-3">Insights</h2><ul id="suggestions" class="space-y-2 text-white/80 font-light"></ul></div>
+        <div class="panel p-6"><h2 class="text-xl font-bold mb-3">Where it goes</h2><div id="breakdown" class="space-y-3"></div></div>
       </div>
     </div>
+    <div class="panel p-6 mt-6"><h2 class="text-xl font-bold mb-4">Recent transactions</h2><ul id="transactionList" class="divide-y divide-white/10"></ul></div>
+  </section>
 
-    <!-- MAIN GRID -->
-    <div class="grid lg:grid-cols-2 gap-6">
-
-      <!-- ADD TRANSACTION -->
-      <div class="glass p-6 rounded-3xl shadow-xl">
-
-        <h2 class="text-2xl font-bold text-black mb-5">
-          Add Transaction
-        </h2>
-
-        <input
-          id="desc"
-          type="text"
-          placeholder="Example: Netflix subscription"
-          class="w-full p-3 mb-4 rounded-xl border text-black focus:ring-2 focus:ring-green-500"
-        />
-
-        <input
-          id="amount"
-          type="number"
-          placeholder="Amount ($)"
-          class="w-full p-3 mb-4 rounded-xl border text-black focus:ring-2 focus:ring-green-500"
-        />
-
-        <select
-          id="type"
-          class="w-full p-3 mb-4 rounded-xl border text-black focus:ring-2 focus:ring-green-500"
-        >
-          <option value="income">💰 Income</option>
-          <option value="expense">💸 Expense</option>
-        </select>
-
-        <button
-          id="addTransactionBtn"
-          class="w-full bg-green-500 hover:bg-green-600 p-3 rounded-xl font-semibold shadow-lg transition"
-        >
-          Add Transaction
-        </button>
-
-      </div>
-
-      <!-- SAVINGS GOAL -->
-      <div class="glass p-6 rounded-3xl shadow-xl">
-
-        <h2 class="text-2xl font-bold text-black mb-5">
-          Savings Goal 🎯
-        </h2>
-
-        <input
-          id="goalInput"
-          type="number"
-          placeholder="Target amount ($)"
-          class="w-full p-3 mb-4 rounded-xl border text-black focus:ring-2 focus:ring-blue-500"
-        />
-
-        <button
-          id="setGoalBtn"
-          class="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded-xl font-semibold shadow-lg transition"
-        >
-          Set Goal
-        </button>
-
-        <div class="mt-5">
-          <div class="flex justify-between text-sm text-black mb-2">
-            <span>Progress</span>
-            <span id="goalProgressText">$0 / $0</span>
-          </div>
-
-          <div class="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
-            <div
-              id="goalProgressBar"
-              class="bg-blue-500 h-4 rounded-full transition-all duration-500"
-              style="width: 0%"
-            ></div>
-          </div>
-        </div>
-
-      </div>
+  <!-- Goals -->
+  <section id="v-goals" class="hidden max-w-xl">
+    <div class="panel p-8">
+      <h2 class="text-2xl font-bold mb-1">Savings goal</h2>
+      <p class="text-white/60 font-light mb-5">Your balance counts toward this number.</p>
+      <input id="goalInput" type="number" min="1" class="inp" placeholder="Target amount in dollars"/>
+      <button id="setGoalBtn" class="btn w-full">Save goal</button>
+      <div class="mt-8 flex justify-between text-sm"><span>Progress</span><span id="goalProgressText">$0 / $0</span></div>
+      <div class="h-4 rounded-full bg-white/10 mt-2 overflow-hidden"><div id="goalProgressBar" class="h-4 bg-[#B8FF1F] rounded-full transition-all duration-700" style="width:0%"></div></div>
     </div>
+  </section>
 
-    <!-- SMART INSIGHTS -->
-    <div class="glass p-6 rounded-3xl shadow-xl mt-6">
+  <!-- Lessons -->
+  <section id="v-lessons" class="hidden">
+    <div id="lessonBox" class="panel p-8 mb-6 hidden max-w-2xl"></div>
+    <div id="lessonGrid" class="grid md:grid-cols-2 gap-4"></div>
+  </section>
 
-      <h2 class="text-2xl font-bold text-black mb-4">
-        Smart Insights 🧠
-      </h2>
+  <!-- Plan -->
+  <section id="v-plan" class="hidden">
+    <div id="planStatus" class="panel p-6 mb-6 max-w-2xl"></div>
+    <div id="pricingApp" class="grid md:grid-cols-2 gap-6 items-stretch max-w-4xl"></div>
+  </section>
+</div>
 
-      <ul
-        id="suggestions"
-        class="space-y-2 text-gray-800"
-      >
-        <li>Start adding transactions to unlock personalized insights.</li>
-      </ul>
-    </div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#B8FF1F] text-[#020F4A] font-semibold px-5 py-3 rounded-full shadow-xl z-50"></div>
 
-    <!-- TRANSACTIONS -->
-    <div class="glass p-6 rounded-3xl shadow-xl mt-6">
-
-      <div class="flex justify-between items-center mb-5">
-        <h2 class="text-2xl font-bold text-black">
-          Recent Transactions
-        </h2>
-
-        <span class="text-sm text-gray-700">
-          Live synced with Firebase 🔥
-        </span>
-      </div>
-
-      <ul
-        id="transactionList"
-        class="space-y-3"
-      >
-        <li class="text-gray-700">
-          No transactions yet.
-        </li>
-      </ul>
-
-    </div>
-
-  </div>
-
-  <script type="module" src="app.js"></script>
-
+<script type="module" src="app.js"></script>
 </body>
 </html>
